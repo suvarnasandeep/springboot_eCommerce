@@ -8,7 +8,7 @@ public class MainController {
 
 	@GetMapping("")
 	public String viewHomePAge() {
-		System.out.println("sandeep");
+		System.out.println("sandeep....");
 		return "index";
 	}
 }
