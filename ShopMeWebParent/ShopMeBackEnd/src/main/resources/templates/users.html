@@ -7,6 +7,10 @@
 <title>Home - ShopMe Admin</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/fontawsome/all.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+
+
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript"
 	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
@@ -54,15 +58,42 @@
 		</div>
 		<div>
 			<h1>Manage Users</h1>
+			<a th:href="@{/users/new}">Create New User</a>
 		</div>
 
+		<div th:if="${message != null}"
+			class="alert alert-success text-center">[[${message}]]</div>
+
 		<div>
-			<table class="table table-bordered table-striped table-hover table-responsive-xl">
-				<thead class="thead-dark">
+			<table
+				class="table table-bordered table-striped table-hover table-responsive-xl">
+				<thead class="thead-light text-center">
 					<tr>
-						<th>User ID</th>
+						<th>
+							<a th:if="${sortField != 'id'}"
+								th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortOrder=' + ${sortOrder}}">
+								User Id 
+							</a> 
+							<a th:if="${sortField == 'id'}"
+								th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortOrder=' + ${reverseSortOrder}}">
+								User Id 
+							</a> 
+							<span th:if="${sortField == 'id'}"
+								th:class="${sortOrder == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
 						<th>Photos</th>
-						<th>First Name</th>
+						<th>
+							<a th:if="${sortField != 'firstName'}"
+								th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortOrder=' + ${sortOrder}}">
+								First Name 
+							</a> 
+							<a th:if="${sortField == 'firstName'}"
+								th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortOrder=' + ${reverseSortOrder}}">
+								First Name 
+							</a> 
+							<span th:if="${sortField == 'firstName'}"
+								th:class="${sortOrder == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
 						<th>Last Name</th>
 						<th>Email</th>
 						<th>Roles</th>
@@ -72,26 +103,74 @@
 				</thead>
 				<tbody>
 					<tr th:each="user : ${listUser}">
-						<td>[[${user.id}]] </td>
-						<td></td>
-						<td>[[${user.firstName}]] </td>
-						<td>[[${user.lastName}]] </td>
-						<td>[[${user.email}]] </td>
-						<td>[[${user.roles}]] </td>
-						<td>[[${user.enabled}]] </td>
-						<td>
-							Edit &nbsp; Delete
-						</td>
-						
+						<td>[[${user.id}]]</td>
+						<td><span class="fas fa-portrait fa-3x icon-dark"></span></td>
+						<td>[[${user.firstName}]]</td>
+						<td>[[${user.lastName}]]</td>
+						<td>[[${user.email}]]</td>
+						<td>[[${user.roles}]]</td>
+						<td><a th:if="${user.enabled == true}"
+							class="fas fa-check-circle fa-2x icon-green"
+							th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
+							title="Disable this user"></a> <a
+							th:if="${user.enabled == false}"
+							class="fas fa-circle fa-2x icon-dark"
+							th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
+							title="Enable this user"></a></td>
+
+						<td><a class="fas fa-edit fa-2x icon-green"
+							th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+							&nbsp; <a class="fas fa-trash fa-2x icon-dark link-delete"
+							th:href="@{'/users/delete/' + ${user.id}}"
+							title="Delete this user"></a></td>
+
 					</tr>
-					
+
 				</tbody>
 			</table>
 		</div>
+
+		<div class="text-center m-1" th:if="${totalItems > 0}" )>
+			<span> Showing user # [[${startCount}]] to [[${endCount}]] of
+				[[${totalItems}]]</span>
+		</div>
+		<div class="text-center m-1" th:unless="${totalItems > 0}" )>
+			<span> No user found!!!</span>
+		</div>
+
+		<nav>
+			<ul class="pagination justify-content-center">
+				<li
+					th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+					<a class="page-link" th:href="@{'/users/page/1?sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">First</a>
+				</li>
+				<li
+					th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+					<a class="page-link"
+					th:href="@{'/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">Previous</a>
+				</li>
+
+				<li
+					th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+					th:each="i : ${#numbers.sequence(1, lastPage)}"><a
+					class="page-link" th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">[[${i}]]</a></li>
+
+				<li
+					th:class="${currentPage != lastPage ? 'page-item' : 'page-item disabled'}">
+					<a class="page-link"
+					th:href="@{'/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">Next</a>
+				</li>
+				<li
+					th:class="${currentPage != lastPage ? 'page-item' : 'page-item disabled'}">
+					<a class="page-link" th:href="@{'/users/page/' + ${lastPage} + '?sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">Last</a>
+				</li>
+			</ul>
+		</nav>
 
 		<div class="text-center">
 			<p>ShopMe Control Panel - Copyright &copy; ShopMe</p>
 		</div>
 	</div>
+
 </body>
 </html>
