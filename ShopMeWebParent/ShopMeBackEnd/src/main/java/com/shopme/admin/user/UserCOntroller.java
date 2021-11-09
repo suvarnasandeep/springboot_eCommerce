@@ -1,7 +1,9 @@
 package com.shopme.admin.user;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -95,7 +97,9 @@ public class UserCOntroller {
 
 
 		redirectAttributes.addFlashAttribute("message", "The user has been saved successfully");
-		return "redirect:/users";
+		
+		String firstPartOfEmail = user.getEmail().split("@")[0];
+		return "redirect:/users/page/1?sortField=id&sortOrder=asc&keyword=" + firstPartOfEmail;
 	}
 
 	@GetMapping("/users/edit/{id}")
@@ -138,6 +142,32 @@ public class UserCOntroller {
 		redirectAttributes.addFlashAttribute("message", "The user id " + id + " has been " + status);
 
 		return "redirect:/users";
-
+	}
+	
+	@GetMapping("/users/export/csv")
+	public void exportToCSV(HttpServletResponse rsponse) throws IOException {
+		
+		List<User> userList = userService.listAll();
+		
+		UserCSVExporter exporter = new UserCSVExporter();		
+		exporter.export(userList, rsponse);
+	}
+	
+	@GetMapping("/users/export/excel")
+	public void exportToExcel(HttpServletResponse rsponse) throws IOException {
+		
+		List<User> userList = userService.listAll();
+		
+		UserExcelExporter exporter = new UserExcelExporter();		
+		exporter.export(userList, rsponse);
+	}
+	
+	@GetMapping("/users/export/pdf")
+	public void exportToPDF(HttpServletResponse rsponse) throws IOException {
+		
+		List<User> userList = userService.listAll();
+		
+		UserPDFExporter exporter = new UserPDFExporter();		
+		exporter.export(userList, rsponse);
 	}
 }
