@@ -43,7 +43,8 @@ public class ShopmeUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getEmail();
+		return user.getFirstName();
+		//return user.getEmail();
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class ShopmeUserDetails implements UserDetails {
 	}
 	
 	public String getFullName() {
-		return this.user.getFirstName() + " " + this.user.getLastName();
+		return user.getFirstName() + " -  " + user.getLastName();
 	}
 
 }

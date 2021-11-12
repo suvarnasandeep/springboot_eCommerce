@@ -46,13 +46,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
+		.antMatchers("/users/**").hasAnyAuthority("Admin")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
 			.loginPage("/login")
 			.usernameParameter("email")
 			.permitAll()
-		.and().logout().permitAll(); 
+		.and().logout().permitAll()
+		.and().rememberMe(); 
 		
 	}
 
