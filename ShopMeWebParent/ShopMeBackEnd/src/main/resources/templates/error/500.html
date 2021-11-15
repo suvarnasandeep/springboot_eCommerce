@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymleaf.org" 
+	xmlns:sec="http://www/thymleaf.org/thymleaf-extras-springsecurity5">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0,minimum-scale=1.0">
+<title>Error - ShopMe Admin</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawsome/all.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+		<div th:replace="navigation :: navigation"></div>
+		<div class="m-3">
+			<h2>Sorry, the server has encountered an error processing the request</h2>
+		</div>
+
+		<div class="text-center">
+			<p>ShopMe Control Panel - Copyright &copy; ShopMe</p>			
+		</div>
+	</div>
+</body>
+</html>
