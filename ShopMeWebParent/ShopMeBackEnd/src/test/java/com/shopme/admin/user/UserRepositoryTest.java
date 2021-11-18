@@ -32,7 +32,7 @@ public class UserRepositoryTest {
 	@Test
 	public void testCreateUserWithOneRow() {
 		Role roleAdmin = entityManager.find(Role.class, 1);
-		User user = new User("anup@gmail.com", "zzzxxx", "Anup", "Kumar");
+		User user = new User("sandeep@gmail.com", "zzzxxx", "sandeep", "suvarna");
 		user.addRole(roleAdmin);
 		
 		User savedUser = repo.save(user);

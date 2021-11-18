@@ -62,13 +62,13 @@
 				</thead>
 				<tbody>
 					<tr th:each="user : ${listUser}">
-						<td>[[${user.id}]]</td>
-						<td><span class="fas fa-portrait fa-3x icon-dark"></span></td>
+						<td class="text-center">[[${user.id}]]</td>
+						<td class="text-center"><span class="fas fa-portrait fa-3x icon-dark"></span></td>
 						<td>[[${user.firstName}]]</td>
 						<td>[[${user.lastName}]]</td>
 						<td>[[${user.email}]]</td>
 						<td>[[${user.roles}]]</td>
-						<td><a th:if="${user.enabled == true}"
+						<td class="text-center"><a th:if="${user.enabled == true}"
 							class="fas fa-check-circle fa-2x icon-green"
 							th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
 							title="Disable this user"></a> <a
@@ -77,7 +77,7 @@
 							th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
 							title="Enable this user"></a></td>
 
-						<td><a class="fas fa-edit fa-2x icon-green"
+						<td class="text-center"><a class="fas fa-edit fa-2x icon-green"
 							th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
 							&nbsp; <a class="fas fa-trash fa-2x icon-dark link-delete"
 							th:href="@{'/users/delete/' + ${user.id}}"
