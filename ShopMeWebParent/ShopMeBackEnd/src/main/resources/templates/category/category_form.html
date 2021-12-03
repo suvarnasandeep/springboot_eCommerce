@@ -18,6 +18,7 @@
 			<h1>Manage Categories | [[${pageTitle}]]</h1>
 		</div>
 
+
 		<form th:action="@{/categories/save}" method="post"
 			style="max-width: 600px; margin: 0 auto" th:object="${category}">
 			<input type="hidden" th:field="*{id}"/>
@@ -40,7 +41,7 @@
 						<select class="form-control" th:field="*{parent}">
 							<option value="0">[No Parent]</option>
 							<th:block th:each="cat : ${listCategories}">
-								<option value="${cat.id}">[[${cat.name}]]</option>
+								<option value="${cat.id}">[[${cat.name}]]</option>								
 							</th:block>
 						</select>
 					</div>
